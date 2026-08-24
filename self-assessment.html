@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professional Self-Assessment | Jesel Reyes ePortfolio</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">Jesel Reyes</a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="enhancement-one-software-design.html">Software Design</a>
+      <a href="enhancement-two-algorithms.html">Algorithms</a>
+      <a href="enhancement-three-databases.html">Databases</a>
+      <a href="self-assessment.html" class="active">Self-Assessment</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="page-hero">
+      <span class="category-label" style="color: var(--accent);">Professional Self-Assessment</span>
+      <h1>Closing Out the Computer Science Program</h1>
+    </div>
+
+    <section class="prose">
+      <p>Completing this capstone has been less about writing new code from scratch and more about
+      returning to work I already trusted and asking it to hold up under a harder question. Each of
+      the three artifacts in this ePortfolio started as a finished course project; the capstone asked
+      me to treat "finished" as a starting point rather than an ending, to go back into code I had
+      already been graded on and find the places where it was doing less than it could. That habit
+      &mdash; distrusting my own past confidence just enough to re-verify it &mdash; is the biggest
+      shift in how I work that I'm carrying out of this program and into a full-stack developer role.</p>
+
+      <h2>Working in a Team Environment</h2>
+      <p>Most of my coursework in this program was completed independently, but the discipline of
+      writing code for someone else to evaluate, review, and build on is the same discipline that
+      makes a codebase workable for a team. Every artifact in this portfolio had to be legible to
+      someone who didn't write it: a grader reading a diff, a future version of myself returning to
+      the Contact Service months later, or a hypothetical teammate picking up the Travlr booking
+      module. Practicing that &mdash; writing code and narratives that explain not just what changed
+      but why, documenting trade-offs instead of leaving them implicit, and structuring commits and
+      READMEs so someone else can reconstruct my reasoning &mdash; is the same skill a team
+      environment demands of a pull request. I expect to keep building on it through code review and
+      pairing once I'm working alongside other developers day to day.</p>
+
+      <h2>Communicating with Stakeholders</h2>
+      <p>Each artifact narrative in this portfolio was written for a specific audience: an instructor
+      evaluating whether I met a stated outcome, but also, implicitly, a future employer or teammate
+      trying to understand what I built and why. Writing three of these narratives back to back
+      sharpened a distinction I now apply everywhere &mdash; the difference between describing what
+      code does and justifying why a design choice was the right one. That justification is what a
+      non-technical stakeholder actually needs: not "I added a compound index," but "queries that
+      used to require scanning the whole collection now use an index, which is why the rescue-type
+      filters became fast." I carried the same instinct into other coursework outside this
+      portfolio, including writing a security policy document for a fictional organization, where the
+      audience was assumed to have no engineering background at all and every technical
+      recommendation had to be justified in terms of risk and cost rather than implementation detail.</p>
+
+      <h2>Algorithms and Data Structures</h2>
+      <p>The Contact Service enhancement is the clearest evidence of this outcome: three
+      purpose-built structures &mdash; a secondary hash index, a trie, and a hand-written merge sort
+      &mdash; each chosen because a specific access pattern (exact lookup by last name, prefix
+      search, alphabetical ordering) had a specific algorithmic answer, not because more data
+      structures are inherently better. The harder lesson underneath that enhancement, though, was
+      that implementing an algorithm correctly in isolation is not the same problem as keeping
+      several derived structures consistent with each other under mutation. Reasoning about
+      invariants across an entire object, rather than the correctness of one method at a time, is
+      the kind of systems thinking I expect to rely on constantly, well beyond any one data
+      structure.</p>
+
+      <h2>Software Engineering, Databases, and Security</h2>
+      <p>Across the Travlr Getaways and Grazioso Salvare enhancements, a pattern repeated itself:
+      the most valuable work wasn't the feature I set out to build, it was the defect I found while
+      building it. Extracting Travlr's authentication middleware into its own module surfaced a real
+      bug where a request could pass authentication before token verification had actually completed.
+      Auditing the Grazioso Salvare database configuration surfaced a server with no authorization
+      enabled at all, meaning a hardcoded password had never actually been enforced. Neither of those
+      was something I set out to find; both came from treating "it already passed" as a hypothesis to
+      verify rather than a fact to build on. That is the security mindset I want to be known for:
+      not a checklist applied once at the end, but a habit of re-examining code that already works
+      and asking what would happen if an assumption behind it were false. I plan to carry that same
+      posture into database design and API development in my next role &mdash; assuming that
+      unenforced access control and untrusted input are the default until I've verified otherwise,
+      not the exception.</p>
+
+      <h2>Looking Forward</h2>
+      <p>Together, these three artifacts show a full-stack developer who can move across a MEAN
+      application, a Java service, and a Python/MongoDB data layer, and who treats security and
+      correctness as things to verify rather than assume. That range, plus the habit of writing down
+      why a design decision was made and not just what it does, is what I'm bringing into a
+      full-stack developer role next.</p>
+    </section>
+
+    <a class="back-link" href="index.html">&larr; Back to all artifacts</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Jesel Reyes &middot; CS 499 Computer Science Capstone &middot; Southern New Hampshire University</p>
+  </div>
+</footer>
+
+</body>
+</html>
