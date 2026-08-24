@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Design &amp; Engineering | Jesel Reyes ePortfolio</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">Jesel Reyes</a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="enhancement-one-software-design.html" class="active">Software Design</a>
+      <a href="enhancement-two-algorithms.html">Algorithms</a>
+      <a href="enhancement-three-databases.html">Databases</a>
+      <a href="self-assessment.html">Self-Assessment</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="page-hero category-one">
+      <span class="category-label">Category One &middot; Software Design &amp; Engineering</span>
+      <h1>Travlr Getaways &mdash; Secured Booking Module &amp; Role-Based Access Control</h1>
+      <p class="section-lead">Originally built in CS 465, Full Stack Development I. Enhanced for CS 499.</p>
+      <div class="meta-row">
+        <span class="pill">MongoDB</span>
+        <span class="pill">Express</span>
+        <span class="pill">Angular 17</span>
+        <span class="pill">Node.js</span>
+        <span class="pill">JWT</span>
+      </div>
+    </div>
+
+    <section>
+      <div class="content-block">
+        <h2>Artifact Description</h2>
+        <p>Travlr Getaways is a full-stack MEAN application that serves two audiences from a single
+        Node/Express backend: a public marketing and booking site rendered with Express and
+        Handlebars, and an Angular 17 single-page application that travel agents use to manage the
+        trip catalog. The original artifact included a Trip model, a REST API for listing, adding,
+        and updating trips, and JWT-based authentication that protected the write endpoints.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Why This Artifact</h2>
+        <p>Travlr Getaways is the largest and most architecturally complete project in my
+        coursework, giving room to demonstrate skills across the full stack rather than in a single
+        file. The enhancement completes a secured Booking feature module with role-based access
+        control (RBAC), implemented across the model, API, security layer, and Angular client.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>What Changed</h2>
+        <p><strong>Booking feature.</strong> A new Mongoose <code>Booking</code> model (trip code,
+        trip name, customer name/email, seat count, status) and a bookings controller with full
+        create, read, and cancel operations. Booking creation validates that the trip exists, that
+        it hasn't already started, and that the requested seats don't exceed the trip's remaining
+        capacity &mdash; computed with a MongoDB aggregation pipeline rather than a live counter
+        that could drift out of sync. The Trip model gained a <code>maxTravelers</code> field to
+        support the capacity check.</p>
+        <p><strong>Role-based access control.</strong> The User model gained a <code>role</code>
+        field (<code>admin</code> or <code>agent</code>), embedded in the JWT payload at sign-in.
+        Authentication moved out of the routes file into a dedicated
+        <code>app_api/middleware/auth.js</code> containing <code>authenticateJWT</code> and a new
+        <code>authorizeRoles(...roles)</code> middleware that gates an endpoint to specific roles.
+        Self-registration always assigns the <code>agent</code> role server-side, so a client can
+        never grant itself admin privileges.</p>
+        <p><strong>A real bug, fixed.</strong> While extracting <code>authenticateJWT</code>, I found
+        that the original code called <code>jwt.verify()</code> with an asynchronous callback but
+        invoked <code>next()</code> immediately afterward instead of from inside that callback &mdash;
+        meaning a request could reach a protected controller before token verification had actually
+        completed. The rewritten middleware only calls <code>next()</code> from inside the
+        verification callback on success.</p>
+        <p><strong>Angular client.</strong> A Booking model, a <code>BookingDataService</code>, a
+        booking-list component with a role-gated cancel action, and an add-booking reactive form
+        component, wired into the existing routing and navigation. The
+        <code>AuthenticationService</code> gained a <code>canManageBookings()</code> helper that
+        reads the role out of the decoded JWT so the SPA's UI gating mirrors what the API enforces.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Course Outcomes Demonstrated</h2>
+        <div class="outcome-grid">
+          <div class="outcome-item">
+            <span class="outcome-num">3</span>
+            <p>Designing and evaluating a computing solution while managing trade-offs &mdash;
+            demonstrated by adding a <code>maxTravelers</code> field and an aggregation-based
+            capacity check instead of ignoring capacity or scanning the full collection on every
+            booking.</p>
+          </div>
+          <div class="outcome-item">
+            <span class="outcome-num">4</span>
+            <p>Using well-founded techniques and tools to deliver value &mdash; demonstrated by the
+            Booking module spanning the model, API, and Angular client as a self-contained, RESTful
+            feature.</p>
+          </div>
+          <div class="outcome-item">
+            <span class="outcome-num">5</span>
+            <p>Developing a security mindset &mdash; demonstrated most directly by the RBAC
+            middleware, the server-side role default on registration, and the
+            <code>authenticateJWT</code> fix, which closes a genuine adversarial-exploit path.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Code &amp; Narrative</h2>
+        <div class="two-col">
+          <div>
+            <h3 style="font-size:1rem;margin-top:0;">Original (pre-capstone)</h3>
+            <ul class="file-list">
+              <li><code>app_api/routes/index.js</code><a href="artifacts/category-one-software-design/original/app_api/routes/index.js">View</a></li>
+              <li><code>app_api/models/user.js</code><a href="artifacts/category-one-software-design/original/app_api/models/user.js">View</a></li>
+              <li><code>app_api/models/travlr.js</code><a href="artifacts/category-one-software-design/original/app_api/models/travlr.js">View</a></li>
+              <li><code>app_api/controllers/authentication.js</code><a href="artifacts/category-one-software-design/original/app_api/controllers/authentication.js">View</a></li>
+              <li><code>app_admin&hellip;/authentication.service.ts</code><a href="artifacts/category-one-software-design/original/app_admin/services/authentication.service.ts">View</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 style="font-size:1rem;margin-top:0;">Enhanced (capstone)</h3>
+            <ul class="file-list">
+              <li><code>app_api/middleware/auth.js</code><a href="artifacts/category-one-software-design/enhanced/app_api/middleware/auth.js">View</a></li>
+              <li><code>app_api/models/booking.js</code><a href="artifacts/category-one-software-design/enhanced/app_api/models/booking.js">View</a></li>
+              <li><code>app_api/controllers/bookings.js</code><a href="artifacts/category-one-software-design/enhanced/app_api/controllers/bookings.js">View</a></li>
+              <li><code>app_api/routes/index.js</code><a href="artifacts/category-one-software-design/enhanced/app_api/routes/index.js">View</a></li>
+              <li><code>app_admin&hellip;/booking-list.component.ts</code><a href="artifacts/category-one-software-design/enhanced/app_admin/booking-list/booking-list.component.ts">View</a></li>
+              <li><code>app_admin&hellip;/add-booking.component.ts</code><a href="artifacts/category-one-software-design/enhanced/app_admin/add-booking/add-booking.component.ts">View</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="download-card">
+          <div>
+            <div class="label">Enhancement One Narrative (Word document)</div>
+            <div class="hint">Full milestone narrative: description, justification, outcomes, and reflection.</div>
+          </div>
+          <a class="btn btn-primary" href="artifacts/category-one-software-design/Enhancement_One_Software_Design_Narrative.docx">Download .docx</a>
+        </div>
+
+        <p><a href="https://github.com/jesreyes9/CS-465" target="_blank" rel="noopener">View the full Travlr Getaways repository on GitHub &rarr;</a></p>
+      </div>
+    </section>
+
+    <a class="back-link" href="index.html">&larr; Back to all artifacts</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Jesel Reyes &middot; CS 499 Computer Science Capstone &middot; Southern New Hampshire University</p>
+  </div>
+</footer>
+
+</body>
+</html>

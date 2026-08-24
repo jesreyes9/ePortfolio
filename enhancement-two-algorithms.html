@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algorithms &amp; Data Structures | Jesel Reyes ePortfolio</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">Jesel Reyes</a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="enhancement-one-software-design.html">Software Design</a>
+      <a href="enhancement-two-algorithms.html" class="active">Algorithms</a>
+      <a href="enhancement-three-databases.html">Databases</a>
+      <a href="self-assessment.html">Self-Assessment</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="page-hero category-two">
+      <span class="category-label">Category Two &middot; Algorithms &amp; Data Structures</span>
+      <h1>Contact Service &mdash; Secondary Index, Trie, and Merge Sort</h1>
+      <p class="section-lead">Originally built in CS 320, Software Test, Automation, and QA. Enhanced for CS 499.</p>
+      <div class="meta-row">
+        <span class="pill">Java</span>
+        <span class="pill">JUnit 5</span>
+        <span class="pill">Data Structures</span>
+      </div>
+    </div>
+
+    <section>
+      <div class="content-block">
+        <h2>Artifact Description</h2>
+        <p>The Contact Service is a Java application consisting of a <code>Contact</code> class
+        (contact ID, first name, last name, phone number, and address, each with input validation
+        enforced in the constructor and setters) and a <code>ContactService</code> class that
+        manages a collection of contacts. The original version stored contacts in a single
+        <code>HashMap</code> keyed by contact ID, giving constant-time add, delete, update, and
+        lookup, and it was backed by a JUnit test suite reaching roughly 95% coverage.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Why This Artifact</h2>
+        <p>The original artifact had an honest, well-defined limitation: the <code>HashMap</code>
+        gave O(1) lookup by contact ID, but no way to search or sort by name without an O(n) linear
+        scan. That gap made it a genuine candidate for a data structures enhancement rather than a
+        superficial one, and the existing strong test suite meant I could extend it with confidence
+        that I wasn't building on top of hidden defects.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>What Changed</h2>
+        <p><strong>Secondary hash index.</strong> A <code>Map</code> from lowercased last name to a
+        <code>Set</code> of contact IDs, trading a small amount of memory for O(1) average-time
+        exact-match lookup by last name instead of a linear scan.</p>
+        <p><strong>Trie for prefix search.</strong> A new <code>TrieNode</code> class, with children
+        keyed by character and a set of contact IDs stored at each terminal node, supporting prefix
+        search and autocomplete in O(k) time, where k is the length of the search prefix &mdash;
+        independent of how many contacts exist.</p>
+        <p><strong>Hand-written merge sort.</strong> Implemented directly rather than delegated to a
+        library sort call, giving a guaranteed O(n log n) divide-and-conquer sort with a composed
+        comparator that orders contacts by last name, then first name.</p>
+        <p>The add, delete, update-first-name, and update-last-name operations were all rewritten to
+        keep the primary map, the secondary index, and the trie synchronized on every mutation, and
+        the JUnit suite gained 26 new tests covering the added behavior.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Course Outcomes Demonstrated</h2>
+        <div class="outcome-grid">
+          <div class="outcome-item">
+            <span class="outcome-num">3</span>
+            <p>Designing and evaluating a computing solution using algorithmic principles while
+            managing design trade-offs &mdash; demonstrated by selecting and justifying three
+            distinct structures for three distinct access patterns, trading extra memory for
+            lookups that used to cost O(n) and now cost O(1) or O(k).</p>
+          </div>
+          <div class="outcome-item">
+            <span class="outcome-num">4</span>
+            <p>Using well-founded techniques, skills, and tools to deliver value &mdash;
+            demonstrated by implementing the trie traversal and merge sort from first principles,
+            and extending the existing JUnit suite so the new algorithms are verified with the same
+            rigor as the original artifact.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Code &amp; Narrative</h2>
+        <div class="two-col">
+          <div>
+            <h3 style="font-size:1rem;margin-top:0;">Original (pre-capstone)</h3>
+            <ul class="file-list">
+              <li><code>Contact.java</code><a href="artifacts/category-two-algorithms/original/Contact.java">View</a></li>
+              <li><code>ContactService.java</code><a href="artifacts/category-two-algorithms/original/ContactService.java">View</a></li>
+              <li><code>ContactTest.java</code><a href="artifacts/category-two-algorithms/original/ContactTest.java">View</a></li>
+              <li><code>ContactServiceTest.java</code><a href="artifacts/category-two-algorithms/original/ContactServiceTest.java">View</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 style="font-size:1rem;margin-top:0;">Enhanced (capstone)</h3>
+            <ul class="file-list">
+              <li><code>Contact.java</code><a href="artifacts/category-two-algorithms/enhanced/Contact.java">View</a></li>
+              <li><code>ContactService.java</code><a href="artifacts/category-two-algorithms/enhanced/ContactService.java">View</a></li>
+              <li><code>TrieNode.java</code><a href="artifacts/category-two-algorithms/enhanced/TrieNode.java">View</a></li>
+              <li><code>ContactTest.java</code><a href="artifacts/category-two-algorithms/enhanced/ContactTest.java">View</a></li>
+              <li><code>ContactServiceTest.java</code><a href="artifacts/category-two-algorithms/enhanced/ContactServiceTest.java">View</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="download-card">
+          <div>
+            <div class="label">Enhancement Two Narrative (Word document)</div>
+            <div class="hint">Full milestone narrative: description, justification, outcomes, and reflection.</div>
+          </div>
+          <a class="btn btn-primary" href="artifacts/category-two-algorithms/Enhancement_Two_Algorithms_Narrative.docx">Download .docx</a>
+        </div>
+      </div>
+    </section>
+
+    <a class="back-link" href="index.html">&larr; Back to all artifacts</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Jesel Reyes &middot; CS 499 Computer Science Capstone &middot; Southern New Hampshire University</p>
+  </div>
+</footer>
+
+</body>
+</html>

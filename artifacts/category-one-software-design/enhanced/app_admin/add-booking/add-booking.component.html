@@ -1,0 +1,46 @@
+<div class="col-md-4">
+  <h2 class="text-center">Add Booking</h2>
+  <div *ngIf="serverError" class="alert alert-danger">{{ serverError }}</div>
+  <form *ngIf="addForm" [formGroup]="addForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label>Trip Code:</label>
+      <input type="text" formControlName="tripCode" placeholder="Trip Code" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['tripCode'].errors }">
+      <div *ngIf="submitted && f['tripCode'].errors">
+        <div *ngIf="f['tripCode'].errors?.['required']">Trip Code is required</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Customer Name:</label>
+      <input type="text" formControlName="customerName" placeholder="Customer Name" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['customerName'].errors }">
+      <div *ngIf="submitted && f['customerName'].errors">
+        <div *ngIf="f['customerName'].errors?.['required']">Customer Name is required</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Customer Email:</label>
+      <input type="email" formControlName="customerEmail" placeholder="Customer Email" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['customerEmail'].errors }">
+      <div *ngIf="submitted && f['customerEmail'].errors">
+        <div *ngIf="f['customerEmail'].errors?.['required']">Customer Email is required</div>
+        <div *ngIf="f['customerEmail'].errors?.['email']">Must be a valid email</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Seats:</label>
+      <input type="number" formControlName="seats" placeholder="Seats" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['seats'].errors }">
+      <div *ngIf="submitted && f['seats'].errors">
+        <div *ngIf="f['seats'].errors?.['required']">Seats is required</div>
+        <div *ngIf="f['seats'].errors?.['min']">Seats must be at least 1</div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-info">Save</button>
+  </form>
+</div>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Databases | Jesel Reyes ePortfolio</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">Jesel Reyes</a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="enhancement-one-software-design.html">Software Design</a>
+      <a href="enhancement-two-algorithms.html">Algorithms</a>
+      <a href="enhancement-three-databases.html" class="active">Databases</a>
+      <a href="self-assessment.html">Self-Assessment</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="page-hero category-three">
+      <span class="category-label">Category Three &middot; Databases</span>
+      <h1>Grazioso Salvare Dashboard &mdash; Aggregation Pipelines, Indexing &amp; Access Control</h1>
+      <p class="section-lead">Originally built in CS 340, Client/Server Development. Enhanced for CS 499.</p>
+      <div class="meta-row">
+        <span class="pill">Python</span>
+        <span class="pill">MongoDB</span>
+        <span class="pill">PyMongo</span>
+        <span class="pill">Dash</span>
+        <span class="pill">Jupyter</span>
+      </div>
+    </div>
+
+    <section>
+      <div class="content-block">
+        <h2>Artifact Description</h2>
+        <p>The Grazioso Salvare animal shelter dashboard has two parts: a Python data access module,
+        <code>CRUD_Python_Module_Module5.py</code>, which defines an <code>AnimalShelter</code>
+        class wrapping PyMongo with create, read, update, and delete operations against a MongoDB
+        collection of Austin Animal Center outcome records; and a Jupyter notebook,
+        <code>ProjectTwoDashboard.ipynb</code>, that builds an interactive Dash web application on
+        top of that class &mdash; a filterable data table, three rescue-type filter buttons (water,
+        mountain/wilderness, disaster/individual tracking), a breed distribution pie chart, and a
+        geolocation map. The client, Grazioso Salvare, is a fictional search-and-rescue organization
+        that needed to identify shelter animals suited for rescue training based on breed, sex, and age.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Why This Artifact</h2>
+        <p>Of the three courses considered for the databases category, this is the one where the
+        database is not incidental to the application &mdash; it <em>is</em> the application. The
+        <code>AnimalShelter</code> class is the only layer that talks to data, and every widget in
+        the dashboard depends on how well that layer is designed, making it a direct test of
+        database skills rather than a smaller supporting piece.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>What Changed</h2>
+        <p><strong>Aggregation over pandas-side filtering.</strong> The original class only exposed
+        <code>find()</code>, so every rescue-type button pulled the entire collection into memory
+        and re-scanned it three times with duplicated filter logic. <code>get_rescue_candidates()</code>
+        now runs a single aggregation pipeline keyed off a shared <code>RESCUE_CRITERIA</code>
+        dictionary, and <code>get_breed_counts()</code> performs the group-and-count work for the
+        pie chart as a MongoDB <code>$group</code> stage instead of a pandas <code>value_counts()</code> call.</p>
+        <p><strong>Indexing.</strong> A compound index ordered by the equality-before-range rule
+        (animal type and sex before breed and age), single-field indexes on breed and outcome type,
+        and a 2dsphere geospatial index &mdash; which required a migration step,
+        <code>_migrate_geojson_location()</code>, to backfill a proper GeoJSON field from the
+        existing latitude/longitude columns. <code>explain_read()</code> and
+        <code>explain_aggregate()</code> helpers let index usage be verified rather than assumed.</p>
+        <p><strong>NoSQL-injection defense.</strong> A new <code>aggregate()</code> method validates
+        every pipeline through <code>_reject_dangerous_operators()</code>, which blocks operators
+        such as <code>$where</code> and <code>$out</code> from ever reaching the database.</p>
+        <p><strong>Credential hygiene.</strong> Removed a hardcoded database password from source in
+        favor of <code>MONGO_USER</code>/<code>MONGO_PASS</code> environment variables, created a
+        least-privilege <code>aacuser</code> account (readWrite on the <code>aac</code> database
+        only), and enabled server-side authorization &mdash; which had not been enabled at all
+        previously, meaning the original hardcoded password was not being enforced by anything.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Course Outcomes Demonstrated</h2>
+        <div class="outcome-grid">
+          <div class="outcome-item">
+            <span class="outcome-num">3</span>
+            <p>Designing and evaluating a computing solution while managing trade-offs &mdash;
+            demonstrated by the compound index ordering itself: applying the equality-sort-range
+            rule to put <code>animal_type</code> and <code>sex_upon_outcome</code> ahead of breed
+            and moving the ranged age field to the end.</p>
+          </div>
+          <div class="outcome-item">
+            <span class="outcome-num">4</span>
+            <p>Using well-founded tools and techniques to deliver value &mdash; demonstrated by the
+            aggregation pipelines and indexes replacing pandas-side scans, with
+            <code>explain_read()</code>/<code>explain_aggregate()</code> providing a way to measure
+            the improvement instead of assuming it.</p>
+          </div>
+          <div class="outcome-item">
+            <span class="outcome-num">5</span>
+            <p>Developing a security mindset &mdash; demonstrated by the sanitize-before-query
+            pattern in <code>_reject_dangerous_operators()</code>, and by replacing an unenforced
+            hardcoded credential with a least-privilege account and server-side authorization.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Code &amp; Narrative</h2>
+        <ul class="file-list">
+          <li><code>CRUD_Python_Module_Module5.py</code><a href="artifacts/category-three-databases/CRUD_Python_Module_Module5.py">View</a></li>
+          <li><code>ProjectTwoDashboard.ipynb</code><a href="artifacts/category-three-databases/ProjectTwoDashboard.ipynb">View</a></li>
+        </ul>
+
+        <div class="download-card">
+          <div>
+            <div class="label">Enhancement Three Narrative (Word document)</div>
+            <div class="hint">Full milestone narrative: description, justification, outcomes, and reflection.</div>
+          </div>
+          <a class="btn btn-primary" href="artifacts/category-three-databases/Enhancement_Three_Databases_Narrative.docx">Download .docx</a>
+        </div>
+
+        <p><a href="https://github.com/jesreyes9/CS-340-12596" target="_blank" rel="noopener">View the Grazioso Salvare repository on GitHub &rarr;</a></p>
+      </div>
+    </section>
+
+    <a class="back-link" href="index.html">&larr; Back to all artifacts</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Jesel Reyes &middot; CS 499 Computer Science Capstone &middot; Southern New Hampshire University</p>
+  </div>
+</footer>
+
+</body>
+</html>
